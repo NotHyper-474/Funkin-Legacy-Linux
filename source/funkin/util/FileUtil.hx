@@ -645,7 +645,7 @@ class FileUtil
     };
   }
 
-  public static function openFolder(pathFolder:String)
+  public static function openFolder(pathFolder:String):Void
   {
     #if windows
     Sys.command('explorer', [pathFolder]);
@@ -656,9 +656,22 @@ class FileUtil
     // FileUtil.hx note: this was originally used to open the logs specifically!
     // thats why the above comment is there!
     Sys.command('open', [pathFolder]);
+    // #end
     #elseif linux
-    // Can't use args parameter or else & gets treated incorrectly
-    Sys.command('xdg-open $pathFolder &');
+    // TODO: This way of retrieving exit code without freezing the game isn't working :P
+    sys.thread.Thread.create(() -> {
+      final proc = new sys.io.Process('xdg-open', [pathFolder]);
+      switch (proc.exitCode())
+      {
+        case 1: // Invalid syntax - probably may never happen
+        case 2: // Non-existent folder
+        case 4: // The action failed (whatever that means)
+          trace('Could not open folder $pathFolder');
+        case 3:
+          trace('Could not find preferred application to open folder.');
+      }
+      proc.close();
+    });
     #end
   }
 

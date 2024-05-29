@@ -23,10 +23,9 @@ class WindowUtil
   public static function openURL(targetUrl:String):Void
   {
     #if CAN_OPEN_LINKS
-    #if linux
-    Sys.command('/usr/bin/xdg-open', [targetUrl, '&']);
-    #else
-    // This should work on Windows and HTML5.
+    #if (target.threaded)
+    sys.thread.Thread.create(() -> FlxG.openURL(targetUrl));
+    #else // Should work for HTML5
     FlxG.openURL(targetUrl);
     #end
     #else
