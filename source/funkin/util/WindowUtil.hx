@@ -121,4 +121,16 @@ class WindowUtil
   {
     lime.app.Application.current.window.title = value;
   }
+
+  /**
+   * Shows a message box if supported or logs message to the console
+   */
+  public static function showMessageBox(message:String, title:String):Void
+  {
+    #if sys
+    lime.app.Application.current.window.alert(message, title);
+    #else
+    // TODO: Logging
+    #end
+  }
 }

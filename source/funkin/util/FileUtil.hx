@@ -658,19 +658,21 @@ class FileUtil
     Sys.command('open', [pathFolder]);
     // #end
     #elseif linux
-    // TODO: This way of retrieving exit code without freezing the game isn't working :P
     sys.thread.Thread.create(() -> {
-      final proc = new sys.io.Process('xdg-open', [pathFolder]);
-      switch (proc.exitCode())
+      final result = Sys.command('xdg-open', [pathFolder]);
+      switch (result)
       {
-        case 1: // Invalid syntax - probably may never happen
-        case 2: // Non-existent folder
-        case 4: // The action failed (whatever that means)
-          trace('Could not open folder $pathFolder');
+        /*
+          1 - Invalid syntax or xdg-open is not installed
+          4 - The action failed (whatever that means)
+         */
+        case 1 | 4:
+          WindowUtil.showMessageBox('Could not open folder $pathFolder', "Error");
+        case 2:
+          WindowUtil.showMessageBox('Could not open folder $pathFolder: It doesn\'t exist', "Error");
         case 3:
-          trace('Could not find preferred application to open folder.');
+          WindowUtil.showMessageBox('Could not find preferred application to open folder.', "Error");
       }
-      proc.close();
     });
     #end
   }
