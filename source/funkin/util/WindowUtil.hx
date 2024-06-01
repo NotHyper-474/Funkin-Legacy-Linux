@@ -1,5 +1,6 @@
 package funkin.util;
 
+import lime.app.Application;
 import flixel.util.FlxSignal.FlxTypedSignal;
 
 using StringTools;
@@ -24,10 +25,15 @@ class WindowUtil
   {
     #if CAN_OPEN_LINKS
     #if (target.threaded)
-    sys.thread.Thread.create(() -> FlxG.openURL(targetUrl));
-    #else // Should work for HTML5
-    FlxG.openURL(targetUrl);
+    sys.thread.Thread.create(() -> {
     #end
+      FlxG.openURL(targetUrl);
+    #if (target.threaded)
+    });
+    #end
+    /*#else // Should work for HTML5
+    FlxG.openURL(targetUrl);
+    #end*/
     #else
     throw 'Cannot open URLs on this platform.';
     #end
@@ -45,7 +51,8 @@ class WindowUtil
     #elseif mac
     Sys.command('open', [targetPath]);
     #elseif linux
-    Sys.command('open', [targetPath]);
+    // For now just reuse FileUtil, why is there even two methods that do the same thing?
+    FileUtil.openFolder(targetPath);
     #end
     #else
     throw 'Cannot open URLs on this platform.';
@@ -64,8 +71,15 @@ class WindowUtil
     #elseif mac
     Sys.command('open', ['-R', targetPath]);
     #elseif linux
-    // TODO: unsure of the linux equivalent to opening a folder and then "selecting" a file.
-    Sys.command('open', [targetPath]);
+    // TODO: Is this consistent across distros?
+    Sys.command('dbus-send', [
+      '--session',
+      '--print-reply',
+      '--dest=org.freedesktop.FileManager1',
+      '--type=method_call /org/freedesktop/FileManager1',
+      'org.freedesktop.FileManager1.ShowItems array:string:"file://$targetPath"',
+      'string:""'
+    ]);
     #end
     #else
     throw 'Cannot open URLs on this platform.';
