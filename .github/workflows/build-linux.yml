@@ -1,0 +1,39 @@
+name: x64 Linux Build
+on: workflow_dispatch
+jobs:
+  build:
+    name: Linux Build
+    runs-on: ubuntu-20.04 # Distro with at least an suitable GLibC version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true # IMPORTANT!
+
+      - name: Setup Haxe environment
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.2
+
+      - name: Install VLC and depedencies
+      - run: |
+            sudo apt-get update
+            sudo apt-get install libvlc-dev libvlccore-dev
+
+      - name: Setup Haxe libraries
+      - run: | # NOTE: Funkin's lime repo was built ontop of GLibC 2.38(?) so a rebuild is needed
+           haxelib install hmm --quiet
+           haxelib run hmm setup --quiet
+           haxelib run hmm install --quiet
+           haxelib run lime rebuild hxcpp
+
+      - name: Build Game
+      - run: haxelib run lime build linux
+
+      - name: Upload!
+        uses: actions/upload-artifact@latest
+        with:
+          name: linuxBuild
+          path: export/release/linux/bin
+          if-no-files-found: error
+    
