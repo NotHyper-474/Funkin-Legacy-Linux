@@ -16,19 +16,19 @@ jobs:
           haxe-version: 4.3.2
 
       - name: Install VLC and depedencies
-      - run: |
+        run: |
             sudo apt-get update
             sudo apt-get install libvlc-dev libvlccore-dev
 
       - name: Setup Haxe libraries
-      - run: | # NOTE: Funkin's lime repo was built ontop of GLibC 2.38(?) so a rebuild is needed
+        run: | # NOTE: Funkin's lime repo was built ontop of GLibC 2.38(?) so a rebuild is needed
            haxelib install hmm --quiet
            haxelib run hmm setup --quiet
            haxelib run hmm install --quiet
            haxelib run lime rebuild hxcpp
 
       - name: Build Game
-      - run: haxelib run lime build linux
+        run: haxelib run lime build linux
 
       - name: Upload!
         uses: actions/upload-artifact@latest
