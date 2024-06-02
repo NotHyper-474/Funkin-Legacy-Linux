@@ -31,7 +31,7 @@ jobs:
         run: haxelib run lime build linux
 
       - name: Upload!
-        uses: actions/upload-artifact@latest
+        uses: actions/upload-artifact@v4
         with:
           name: linuxBuild
           path: export/release/linux/bin
