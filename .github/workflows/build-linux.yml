@@ -15,7 +15,7 @@ jobs:
         with:
           haxe-version: 4.3.2
 
-      - name: Install VLC and depedencies
+      - name: Install VLC and dependencies
         run: |
             sudo apt-get update
             sudo apt-get install libvlc-dev libvlccore-dev
