@@ -1,0 +1,43 @@
+name: x64 Linux Build
+on: workflow_dispatch
+jobs:
+  build:
+    name: Linux Build
+    runs-on: ubuntu-20.04 # Distro with at least an suitable GLibC version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true # IMPORTANT!
+
+      - name: Setup Haxe environment
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.2
+
+      - name: Install VLC and dependencies
+        run: |
+            sudo apt-get update
+            sudo apt-get install libvlc-dev libvlccore-dev
+
+      - name: Setup Haxe libraries
+        run: |
+           haxelib install hmm --quiet
+           haxelib run hmm setup --quiet
+           haxelib run hmm install --quiet
+
+      - name: Rebuild Lime with runner machine GLibC
+        run: |
+           sudo apt-get install libgl1-mesa-dev libglu1-mesa-dev g++ g++-multilib gcc-multilib libasound2-dev libx11-dev libxext-dev libxi-dev libxrandr-dev libxinerama-dev
+           haxelib run lime rebuild cpp
+
+      - name: Build Game
+        run: haxelib run lime build linux
+
+      - name: Upload!
+        uses: actions/upload-artifact@v4
+        with:
+          name: linuxBuild
+          path: export/release/linux/bin
+          if-no-files-found: error
+    
