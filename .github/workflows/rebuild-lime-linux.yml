@@ -33,10 +33,18 @@ jobs:
           haxelib run lime rebuild linux -release -clean
         # TODO: See if debug files need rebuilding as well
 
-      - name: Upload NDLL
+      - name: Upload 32-bit NDLLs
         uses: actions/upload-artifact@v4
         with:
           name: linuxNDLL
+          path: lime/ndll/Linux
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload 64-bit NDLLs
+        uses: actions/upload-artifact@v4
+        with:
+          name: linuxNDLL64
           path: lime/ndll/Linux64
           compression-level: 0
           if-no-files-found: error
