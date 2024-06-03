@@ -26,10 +26,12 @@ jobs:
       - name: Rebuild Lime
         run: |
           haxelib dev lime lime
-          haxelib install format
-          haxelib install hxp
-          haxelib install hxcpp
+          haxelib install format --quiet
+          haxelib install hxp --quiet
+          haxelib install hxcpp --quiet
           haxelib run lime rebuild linux -release -64 -clean
+          haxelib run lime rebuild linux -release -clean
+        # TODO: See if debug files need rebuilding as well
 
       - name: Upload NDLL
         uses: actions/upload-artifact@v4
@@ -38,4 +40,4 @@ jobs:
           path: lime/ndll/Linux64
           compression-level: 0
           if-no-files-found: error
-        
+
