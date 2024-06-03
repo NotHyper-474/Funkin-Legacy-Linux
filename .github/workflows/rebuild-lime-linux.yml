@@ -1,3 +1,4 @@
+name: Rebuild Lime Linux NDLL
 on:
   workflow_dispatch
 
@@ -27,6 +28,7 @@ jobs:
           haxelib dev lime lime
           haxelib install format
           haxelib install hxp
+          haxelib install hxcpp
           haxelib run lime rebuild linux -release -64 -clean
 
       - name: Upload NDLL
