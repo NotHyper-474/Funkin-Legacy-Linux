@@ -1,6 +1,7 @@
 [submodule "assets"]
 	path = assets
 	url = https://github.com/FunkinCrew/funkin.assets
+	branch = 3b8235e953505a6fe7f4ff253f5a99b9a7b9857a
 [submodule "art"]
 	path = art
 	url = https://github.com/FunkinCrew/funkin.art
