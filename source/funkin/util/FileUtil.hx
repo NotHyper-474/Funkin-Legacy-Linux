@@ -658,22 +658,7 @@ class FileUtil
     Sys.command('open', [pathFolder]);
     // #end
     #elseif linux
-    sys.thread.Thread.create(() -> {
-      final proc = new sys.io.Process('xdg-open', [pathFolder]);
-      switch (proc.exitCode())
-      {
-        /*
-          1 - Invalid syntax or xdg-open is not installed
-          4 - The action failed (might happen if there's no application to open a file)
-         */
-        case 1 | 4:
-          WindowUtil.showMessageBox('Could not open folder $pathFolder: ${proc.stderr.readLine()}', "Error");
-        case 2:
-          WindowUtil.showMessageBox('Could not open folder $pathFolder: It doesn\'t exist', "Error");
-        case 3:
-          WindowUtil.showMessageBox('Could not find preferred application to open folder.', "Error");
-      }
-    });
+    Sys.command('xdg-open $pathFolder &');
     #end
   }
 
