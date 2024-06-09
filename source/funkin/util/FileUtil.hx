@@ -645,7 +645,7 @@ class FileUtil
     };
   }
 
-  public static function openFolder(pathFolder:String)
+  public static function openFolder(pathFolder:String):Void
   {
     #if windows
     Sys.command('explorer', [pathFolder]);
