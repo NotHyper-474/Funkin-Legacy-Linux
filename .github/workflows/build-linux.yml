@@ -13,7 +13,7 @@ jobs:
       - name: Setup Haxe environment
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.2
+          haxe-version: 4.3.4
 
       - name: Install VLC dependencies
         run: |
