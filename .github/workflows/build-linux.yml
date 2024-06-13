@@ -4,6 +4,8 @@ jobs:
   build:
     name: Linux Build
     runs-on: ubuntu-20.04 # Distro with at least an suitable GLibC version
+    strategy:
+      fail-fast: false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +29,9 @@ jobs:
            haxelib run hmm install --quiet
 
       - name: Build Game
-        run: haxelib run lime build linux
+        run: |
+          haxelib run lime build linux
+          chmod +x export/release/linux/bin/Funkin
 
       - name: Upload!
         uses: actions/upload-artifact@v4
