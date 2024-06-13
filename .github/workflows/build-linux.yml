@@ -38,6 +38,7 @@ jobs:
       - name: Build Game
         run: haxelib run lime build linux
 
+
       - name: Add Executable Privileges
         run: chmod +x export/release/linux/bin/Funkin
 
@@ -54,4 +55,3 @@ jobs:
         with:
           path: export/release/linux
           key: ${{ steps.restore-cache.outputs.cache-primary-key }}
-      
