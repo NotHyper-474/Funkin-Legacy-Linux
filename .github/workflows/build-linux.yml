@@ -12,6 +12,13 @@ jobs:
         with:
           submodules: true # IMPORTANT!
 
+      - name: Restore Cache Files
+        id: restore-cache
+        uses: actions/cache@v4.0.2
+        with:
+          path: export/release/linux
+          key: funkin-cache
+
       - name: Setup Haxe environment
         uses: krdlab/setup-haxe@master
         with:
@@ -29,9 +36,10 @@ jobs:
            haxelib run hmm install --quiet
 
       - name: Build Game
-        run: |
-          haxelib run lime build linux
-          chmod +x export/release/linux/bin/Funkin
+        run: haxelib run lime build linux
+
+      - name: Add Executable Privileges
+        run: chmod +x export/release/linux/bin/Funkin
 
       - name: Upload!
         uses: actions/upload-artifact@v4
@@ -40,3 +48,10 @@ jobs:
           path: export/release/linux/bin
           if-no-files-found: error
 
+      - name: Save Compiled Data
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: export/release/linux
+          key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+      
