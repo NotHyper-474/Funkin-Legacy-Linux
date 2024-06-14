@@ -16,7 +16,10 @@ jobs:
         id: restore-cache
         uses: actions/cache@v4.0.2
         with:
-          path: export/release/linux
+          path: |
+            .haxelib
+            export/release/linux/haxe
+            export/release/linux/obj
           key: funkin-cache
 
       - name: Setup Haxe environment
@@ -38,7 +41,6 @@ jobs:
       - name: Build Game
         run: haxelib run lime build linux
 
-
       - name: Add Executable Privileges
         run: chmod +x export/release/linux/bin/Funkin
 
@@ -53,5 +55,8 @@ jobs:
         id: cache-primes-save
         uses: actions/cache/save@v4
         with:
-          path: export/release/linux
+          path: |
+            .haxelib
+            export/release/linux/haxe
+            export/release/linux/obj
           key: funkin-cache
