@@ -34,9 +34,9 @@ jobs:
 
       - name: Setup Haxe libraries
         run: |
-           haxelib install hmm --quiet
-           haxelib run hmm setup --quiet
-           haxelib run hmm --quiet reinstall 
+           haxelib --quiet install hmm
+           haxelib --quiet run hmm setup
+           haxelib --quiet run hmm reinstall
 
       - name: Build Game
         run: haxelib run lime build linux
