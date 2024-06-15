@@ -36,7 +36,7 @@ jobs:
         run: |
            haxelib install hmm --quiet
            haxelib run hmm setup --quiet
-           haxelib run hmm reinstall --quiet
+           haxelib run hmm --quiet reinstall 
 
       - name: Build Game
         run: haxelib run lime build linux
