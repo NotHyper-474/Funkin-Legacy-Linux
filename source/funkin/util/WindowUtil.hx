@@ -137,10 +137,10 @@ class WindowUtil
    */
   public static function showMessageBox(message:String, title:String):Void
   {
+    trace('[$title] $message');
+
     #if sys
     lime.app.Application.current.window.alert(message, title);
-    #else
-    // TODO: Logging
     #end
   }
 }
