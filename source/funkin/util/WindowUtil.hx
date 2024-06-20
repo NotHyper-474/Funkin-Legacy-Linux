@@ -137,14 +137,12 @@ class WindowUtil
   }
 
   /**
-   * Shows a message box if supported or logs message to the console
+   * Shows a message box if supported and logs message to the console
    */
-  public static function showMessageBox(message:String, title:String):Void
+  public static function showMessageBox(message:Null<String>, title:Null<String>):Void
   {
     trace('[$title] $message');
 
-    #if sys
     lime.app.Application.current.window.alert(message, title);
-    #end
   }
 }
