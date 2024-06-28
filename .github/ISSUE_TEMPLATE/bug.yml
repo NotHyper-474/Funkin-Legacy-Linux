@@ -43,9 +43,7 @@ body:
   - type: textarea
     attributes:
       label: Context (Provide images, videos, etc.)
-      required: false
 
   - type: textarea
     attributes:
       label: Steps to reproduce (or crash logs, errors, etc.)
-      required: false
