@@ -33,8 +33,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        "### Please do not report issues from other engines. These must be reported in their repositories."
-        Also do notice that issues that are in the base game are likely to not be fixed! Only report issues specific to these builds
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        ### Also do notice that issues that are in the base game are likely to not be fixed! Only report issues specific to these builds
 
   - type: markdown
     attributes:
