@@ -45,7 +45,7 @@ jobs:
       - name: Add Executable Privileges and Pack to Tar
         run: |
           chmod +x export/release/linux/bin/Funkin
-          tar -cvf funkin-linux-64bit-unofficial.tar.gz export/release/linux/bin
+          tar -cjvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
 
       - name: Upload!
         uses: actions/upload-artifact@v4
