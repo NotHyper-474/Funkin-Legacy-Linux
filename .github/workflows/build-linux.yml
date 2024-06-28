@@ -42,14 +42,15 @@ jobs:
       - name: Build Game
         run: haxelib run lime build linux
 
-      - name: Add Executable Privileges
-        run: chmod +x export/release/linux/bin/Funkin
+      - name: Add Executable Privileges and Pack to Tar
+        run: |
+          chmod +x export/release/linux/bin/Funkin
+          tar -cvf funkin-linux-64bit-unofficial.tar.gz export/release/linux/bin
 
       - name: Upload!
         uses: actions/upload-artifact@v4
         with:
-          name: linuxBuild
-          path: export/release/linux/bin
+          name: funkin-linux-64bit-unofficial.tar.gz
           if-no-files-found: error
 
       # Thanks to https://stackoverflow.com/a/73556714 for the code!
