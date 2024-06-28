@@ -50,7 +50,8 @@ jobs:
       - name: Upload!
         uses: actions/upload-artifact@v4
         with:
-          name: funkin-linux-64bit-unofficial.tar.gz
+          name: linuxBuild
+          path: funkin-linux-64bit-unofficial.tar.gz
           if-no-files-found: error
 
       # Thanks to https://stackoverflow.com/a/73556714 for the code!
