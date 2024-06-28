@@ -10,27 +10,13 @@ body:
         - label: I have properly named the issue
         - label: I looked in issues/discussions, if it has been previously reported
 
-  - type: dropdown
+  - type: input
     attributes:
-      label: What platform are you using?
-      options:
-        - Itch.io - Windows
-        - Itch.io - MacOS
-        - Itch.io - Linux
-        - Newgrounds (Web)
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
-  - type: dropdown
-    attributes:
-      label: If you were playing on a browser, which one were you using?
-      options:
-        - Google Chrome
-        - Microsoft Edge
-        - Firefox
-        - Opera
-        - Safari
-        - Other (Specify below)
 
   - type: input
     attributes:
@@ -46,7 +32,9 @@ body:
 
   - type: markdown
     attributes:
-      value: "### Please do not report issues from other engines. These must be reported in their repositories."
+      value: |
+        "### Please do not report issues from other engines. These must be reported in their repositories."
+        Also do notice that issues that are in the base game are likely to not be fixed! Only report issues specific to these builds
 
   - type: markdown
     attributes:
@@ -55,7 +43,9 @@ body:
   - type: textarea
     attributes:
       label: Context (Provide images, videos, etc.)
+      required: false
 
   - type: textarea
     attributes:
       label: Steps to reproduce (or crash logs, errors, etc.)
+      required: false
