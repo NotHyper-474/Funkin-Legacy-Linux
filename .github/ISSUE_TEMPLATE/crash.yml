@@ -15,6 +15,7 @@ body:
     attributes:
       label: Linux Distribution
       description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
 
