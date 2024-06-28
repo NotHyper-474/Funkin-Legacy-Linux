@@ -10,8 +10,6 @@ body:
       options:
         - label: I have properly named the issue
         - label: I looked in issues/discussions, if it has been previously reported
-      validations:
-        required: true
 
   - type: input
     attributes:
