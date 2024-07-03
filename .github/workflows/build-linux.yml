@@ -48,12 +48,13 @@ jobs:
           tar -cjvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
 
       - name: Upload!
-        uses: actions/upload-artifact@v4
+      - name: Upload Tar Artifact
+        uses: alehechka/upload-tartifact@v2
         with:
-          name: linuxBuild
-          path: funkin-linux-64bit-unofficial.tar.gz
+          name: linuxBuild64
+          path: export/release/linux/bin
           if-no-files-found: error
-
+          
       # Thanks to https://stackoverflow.com/a/73556714 for the code!
       - name: Clear cache
         uses: actions/github-script@v6
