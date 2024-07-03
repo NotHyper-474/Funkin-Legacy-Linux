@@ -36,7 +36,7 @@ jobs:
       - name: Setup Haxe libraries
         run: |
            haxelib --quiet install hmm
-           haxelib --quiet run hmm setup
+           haxelib run hmm setup --quiet
            haxelib --quiet run hmm reinstall
 
       - name: Build Game
@@ -45,13 +45,13 @@ jobs:
       - name: Add Executable Privileges and Pack to Tar
         run: |
           chmod +x export/release/linux/bin/Funkin
-          tar -cjvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
+          tar -czvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
 
       - name: Upload!
-        uses: alehechka/upload-tartifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: linuxBuild64
-          path: export/release/linux/bin
+          path: funkin-linux-64bit-unofficial.tar.gz
           if-no-files-found: error
           
       # Thanks to https://stackoverflow.com/a/73556714 for the code!
