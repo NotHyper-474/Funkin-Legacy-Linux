@@ -48,7 +48,6 @@ jobs:
           tar -cjvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
 
       - name: Upload!
-      - name: Upload Tar Artifact
         uses: alehechka/upload-tartifact@v2
         with:
           name: linuxBuild64
