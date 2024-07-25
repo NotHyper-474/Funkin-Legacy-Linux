@@ -4,6 +4,9 @@ Friday Night Funkin' is a rhythm game. Built using HaxeFlixel for Ludum Dare 47.
 
 This game was made with love to Newgrounds and its community. Extra love to Tom Fulp.
 
+**This fork focuses on making builds for Linux that use an old version of GLibC (more specifically 2.29), I'll not try to fix issues in base game!**  
+You can also download the builds through [Actions](https://github.com/NotHyper-474/Funkin-Legacy-Linux/actions/workflows/build-linux.yml)
+
 - [Playable web demo on Newgrounds!](https://www.newgrounds.com/portal/view/770371)
 - [Demo download builds for Windows, Mac, and Linux from Itch.io!](https://ninja-muffin24.itch.io/funkin)
 

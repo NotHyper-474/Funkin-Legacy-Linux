@@ -19,6 +19,7 @@ import haxe.ui.containers.dialogs.Dialogs.FileDialogExtensionInfo;
 class FileUtil
 {
   public static final FILE_FILTER_FNFC:FileFilter = new FileFilter("Friday Night Funkin' Chart (.fnfc)", "*.fnfc");
+  public static final FILE_FILTER_JSON:FileFilter = new FileFilter("JSON Data File (.json)", "*.json");
   public static final FILE_FILTER_ZIP:FileFilter = new FileFilter("ZIP Archive (.zip)", "*.zip");
   public static final FILE_FILTER_PNG:FileFilter = new FileFilter("PNG Image (.png)", "*.png");
 
@@ -645,7 +646,7 @@ class FileUtil
     };
   }
 
-  public static function openFolder(pathFolder:String)
+  public static function openFolder(pathFolder:String):Void
   {
     #if windows
     Sys.command('explorer', [pathFolder]);
@@ -656,10 +657,10 @@ class FileUtil
     // FileUtil.hx note: this was originally used to open the logs specifically!
     // thats why the above comment is there!
     Sys.command('open', [pathFolder]);
+    #elseif linux
+    // Can't use args parameter or else & gets treated incorrectly
+    Sys.command('xdg-open $pathFolder &');
     #end
-
-    // TODO: implement linux
-    // some shit with xdg-open :thinking: emoji...
   }
 
   static function convertTypeFilter(typeFilter:Array<FileFilter>):String

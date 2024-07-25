@@ -1,0 +1,58 @@
+# Credits to tposejank for the templates!
+name: Crash Report
+description: Report a crash that occurred while playing.
+labels: ["type: major bug", "status: pending triage"]
+title: "Crash: "
+body:
+  - type: checkboxes
+    attributes:
+      label: Issue Checklist
+      options:
+        - label: I have properly named the issue
+        - label: I looked in issues/discussions, if it has been previously reported
+
+  - type: input
+    attributes:
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Version
+      description: What version were you using?
+      placeholder: ex. 0.4.1
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "## Describe the issue."
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        Do also notice that issues also in the base game are likely to not be fixed in these builds!
+
+  - type: markdown
+    attributes:
+      value: "#### Provide as many details as you can."
+
+  - type: textarea
+    attributes:
+      label: Context (Provide images, videos, etc. of the crash happening)
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Crash Logs (can be found in the "log" crash folder)
+    validations:
+      required: true
