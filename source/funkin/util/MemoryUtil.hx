@@ -37,6 +37,10 @@ class MemoryUtil
     #elseif js
     var result:String = 'JS-MNS:';
     result += '\n- Memory Used: ${getMemoryUsed()} bytes';
+    #elseif hl
+    var result:String = 'HashLink';
+    result += '\n- Memory Used: ${getMemoryUsed()} bytes';
+    result += '\n- Memory Allocated: ${haxe.Int64.fromFloat(hl.Gc.stats().totalAllocated)} bytes';
     #else
     var result:String = 'Unknown GC';
     #end
@@ -53,6 +57,8 @@ class MemoryUtil
     #if cpp
     // There is also Gc.MEM_INFO_RESERVED, MEM_INFO_CURRENT, and MEM_INFO_LARGE.
     return cpp.vm.Gc.memInfo(cpp.vm.Gc.MEM_INFO_USAGE);
+    #elseif hl
+    return Std.int(hl.Gc.stats().currentMemory);
     #else
     return openfl.system.System.totalMemory;
     #end
@@ -65,6 +71,8 @@ class MemoryUtil
   {
     #if cpp
     cpp.vm.Gc.enable(true);
+    #elseif hl
+    hl.Gc.enable(true);
     #else
     throw 'Not implemented!';
     #end
@@ -77,6 +85,8 @@ class MemoryUtil
   {
     #if cpp
     cpp.vm.Gc.enable(false);
+    #elseif hl
+    hl.Gc.enable(false);
     #else
     throw 'Not implemented!';
     #end
