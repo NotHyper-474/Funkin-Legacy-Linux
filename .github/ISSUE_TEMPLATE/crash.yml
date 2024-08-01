@@ -1,15 +1,15 @@
 # Credits to tposejank for the templates!
 name: Crash Report
-description: Report a crash that occurred while playing.
+description: Report a crash that occurred while playing the game.
 labels: ["type: major bug", "status: pending triage"]
-title: "Crash: "
+title: "Crash Report: "
 body:
   - type: checkboxes
     attributes:
       label: Issue Checklist
       options:
         - label: I have properly named the issue
-        - label: I looked in issues/discussions, if it has been previously reported
+        - label: I have checked the issues/discussions pages to see if the issue has been previously reported
 
   - type: input
     attributes:
@@ -22,14 +22,14 @@ body:
   - type: input
     attributes:
       label: Version
-      description: What version were you using?
+      description: What version are you using?
       placeholder: ex. 0.4.1
     validations:
       required: true
 
   - type: markdown
     attributes:
-      value: "## Describe the issue."
+      value: "## Describe your issue."
 
   - type: markdown
     attributes:
@@ -43,7 +43,7 @@ body:
 
   - type: textarea
     attributes:
-      label: Context (Provide images, videos, etc. of the crash happening)
+      label: Context (Provide screenshots or videos of the crash happening)
 
   - type: textarea
     attributes:
@@ -53,6 +53,6 @@ body:
 
   - type: textarea
     attributes:
-      label: Crash Logs (can be found in the "log" crash folder)
+      label: "Crash logs (can be found in the logs folder where Funkin's executable is)"
     validations:
       required: true

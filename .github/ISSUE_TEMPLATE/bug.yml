@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug or an issue in the game
+description: Report a bug or an issue in the game.
 labels: ["type: minor bug", "status: pending triage"]
 title: "Bug Report: "
 body:
@@ -8,7 +8,7 @@ body:
       label: Issue Checklist
       options:
         - label: I have properly named the issue
-        - label: I looked in issues/discussions, if it has been previously reported
+        - label: I have checked the issues/discussions pages to see if the issue has been previously reported
 
   - type: input
     attributes:
@@ -17,11 +17,11 @@ body:
       placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
+      
   - type: input
     attributes:
       label: Version
-      description: What version were you using?
+      description: What version are you using?
       placeholder: ex. 0.4.1
     validations:
       required: true
