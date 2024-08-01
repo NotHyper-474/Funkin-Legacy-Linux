@@ -1,3 +1,4 @@
+# Credits to tposejank for the templates!
 name: Crash Report
 description: Report a crash that occurred while playing the game.
 labels: ["type: major bug", "status: pending triage"]
@@ -10,28 +11,13 @@ body:
         - label: I have properly named the issue
         - label: I have checked the issues/discussions pages to see if the issue has been previously reported
 
-  - type: dropdown
+  - type: input
     attributes:
-      label: What platform are you using?
-      options:
-        - Newgrounds (Web)
-        - Itch.io (Web)
-        - Itch.io (Downloadable Build) - Windows
-        - Itch.io (Downloadable Build) - MacOS
-        - Itch.io (Downloadable Build) - Linux
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
-  - type: dropdown
-    attributes:
-      label: If you are playing on a browser, which one are you using?
-      options:
-        - Google Chrome
-        - Microsoft Edge
-        - Firefox
-        - Opera
-        - Safari
-        - Other (Specify below)
 
   - type: input
     attributes:
@@ -47,7 +33,9 @@ body:
 
   - type: markdown
     attributes:
-      value: "### Please do not report issues from other engines. These must be reported in their respective repositories."
+      value: |
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        Do also notice that issues also in the base game are likely to not be fixed in these builds!
 
   - type: markdown
     attributes:
@@ -65,6 +53,6 @@ body:
 
   - type: textarea
     attributes:
-      label: Crash logs (can be found in the logs folder where Funkin.exe is)
+      label: "Crash logs (can be found in the logs folder where Funkin's executable is)"
     validations:
       required: true

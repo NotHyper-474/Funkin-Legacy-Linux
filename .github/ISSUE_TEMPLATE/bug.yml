@@ -10,29 +10,14 @@ body:
         - label: I have properly named the issue
         - label: I have checked the issues/discussions pages to see if the issue has been previously reported
 
-  - type: dropdown
+  - type: input
     attributes:
-      label: What platform are you using?
-      options:
-        - Newgrounds (Web)
-        - Itch.io (Web)
-        - Itch.io (Downloadable Build) - Windows
-        - Itch.io (Downloadable Build) - MacOS
-        - Itch.io (Downloadable Build) - Linux
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
-  - type: dropdown
-    attributes:
-      label: If you are playing on a browser, which one are you using?
-      options:
-        - Google Chrome
-        - Microsoft Edge
-        - Firefox
-        - Opera
-        - Safari
-        - Other (Specify below)
-
+      
   - type: input
     attributes:
       label: Version
@@ -47,7 +32,9 @@ body:
 
   - type: markdown
     attributes:
-      value: "### Please do not report issues from other engines. These must be reported in their respective repositories."
+      value: |
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        ### Also do notice that issues that are in the base game are likely to not be fixed! Only report issues specific to these builds
 
   - type: markdown
     attributes:

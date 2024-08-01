@@ -646,7 +646,7 @@ class FileUtil
     };
   }
 
-  public static function openFolder(pathFolder:String)
+  public static function openFolder(pathFolder:String):Void
   {
     #if windows
     Sys.command('explorer', [pathFolder]);
@@ -657,10 +657,10 @@ class FileUtil
     // FileUtil.hx note: this was originally used to open the logs specifically!
     // thats why the above comment is there!
     Sys.command('open', [pathFolder]);
+    #elseif linux
+    // Can't use args parameter or else & gets treated incorrectly
+    Sys.command('xdg-open $pathFolder &');
     #end
-
-    // TODO: implement linux
-    // some shit with xdg-open :thinking: emoji...
   }
 
   static function convertTypeFilter(typeFilter:Array<FileFilter>):String
