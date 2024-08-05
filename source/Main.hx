@@ -14,7 +14,7 @@ import openfl.media.Video;
 import openfl.net.NetStream;
 
 // Adds support for FeralGamemode on Linux
-#if linux
+#if (linux && !DISABLE_GAMEMODE)
 @:cppInclude('./external/gamemode_client.h')
 @:cppFileCode('
 	#define GAMEMODE_AUTO

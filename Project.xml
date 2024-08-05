@@ -231,6 +231,9 @@ xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/
 			However, it also messes with breakpoints on some platforms.
 		-->
 		<haxedef name="openfl-enable-handle-error" />
+
+		<!-- Disable Feral Gamemode -->
+		<haxedef name="DISABLE_GAMEMODE" if="linux WSL_DEV"/>
 	</section>
 
 	<!-- Run a script before and after building. -->
