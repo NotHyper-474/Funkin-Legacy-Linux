@@ -41,6 +41,7 @@ class MemoryUtil
     var result:String = 'HashLink';
     result += '\n- Memory Used: ${getMemoryUsed()} bytes';
     result += '\n- Memory Allocated: ${haxe.Int64.fromFloat(hl.Gc.stats().totalAllocated)} bytes';
+    result += '\n- Memory Allocation Count: ${haxe.Int64.fromFloat(hl.Gc.stats().allocationCount)} bytes';
     #else
     var result:String = 'Unknown GC';
     #end
