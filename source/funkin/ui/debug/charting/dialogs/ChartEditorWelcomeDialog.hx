@@ -90,11 +90,6 @@ class ChartEditorWelcomeDialog extends ChartEditorBaseDialog
 
     linkRecentChart.tooltip = chartPath;
 
-    #if sys
-    var lastModified:String = "Last Modified: " + sys.FileSystem.stat(chartPath).mtime.toString();
-    linkRecentChart.tooltip += "\n" + lastModified;
-    #end
-
     linkRecentChart.onClick = function(_event) {
       this.hideDialog(DialogButton.CANCEL);
 
@@ -116,6 +111,13 @@ class ChartEditorWelcomeDialog extends ChartEditorBaseDialog
       trace('Previously loaded chart file (${chartPath}) does not exist, disabling link...');
       linkRecentChart.disabled = true;
     }
+    #if sys
+    else
+    {
+      var lastModified:String = "Last Modified: " + sys.FileSystem.stat(chartPath).mtime.toString();
+      linkRecentChart.tooltip += "\n" + lastModified;
+    }
+    #end
 
     splashRecentContainer.addComponent(linkRecentChart);
   }
