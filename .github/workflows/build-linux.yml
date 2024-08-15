@@ -26,26 +26,26 @@ jobs:
       - name: Setup Haxe environment
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.3.4
+          haxe-version: 4.3.6
 
       - name: Install VLC dependencies
         run: |
             sudo apt-get update
             sudo apt-get install libvlc-dev libvlccore-dev
 
+      # This custom hmm is necessary for --quiet to work with reinstall command
+      # Also why reinstall? Because the cache sometimes gets corrupted and causes Haxe/Lime to recompile everything from scratch
       - name: Setup Haxe libraries
         run: |
-           haxelib --quiet install hmm
-           haxelib run hmm setup --quiet
-           haxelib --quiet run hmm reinstall
+          haxelib git hmm https://github.com/NotHyper-474/hmm.git b742bb114aa84d1b277a318ffd30e93833986bfb
+          haxelib run hmm setup --quiet
+          haxelib run hmm reinstall --quiet
 
       - name: Build Game
         run: haxelib run lime build linux
 
-      - name: Add Executable Privileges and Pack to Tar
-        run: |
-          chmod +x export/release/linux/bin/Funkin
-          tar -czvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
+      - name: Pack to Tar
+        run: tar -czvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
 
       - name: Upload!
         uses: actions/upload-artifact@v4
@@ -53,7 +53,7 @@ jobs:
           name: linuxBuild64
           path: funkin-linux-64bit-unofficial.tar.gz
           if-no-files-found: error
-          
+
       # Thanks to https://stackoverflow.com/a/73556714 for the code!
       - name: Clear cache
         uses: actions/github-script@v6
@@ -73,7 +73,7 @@ jobs:
               })
             }
             console.log("Clear completed")
-            
+
       - name: Save Compiled Data
         id: cache-save
         uses: actions/cache/save@v4
