@@ -37,7 +37,7 @@ jobs:
       # Also why reinstall? Because the cache sometimes gets corrupted and causes Haxe/Lime to recompile everything from scratch
       - name: Setup Haxe libraries
         run: |
-          haxelib git hmm https://github.com/NotHyper-474/hmm.git b742bb114aa84d1b277a318ffd30e93833986bfb
+          haxelib git hmm https://github.com/NotHyper-474/hmm.git b742bb114aa84d1b277a318ffd30e93833986bfb --quiet
           haxelib run hmm setup --quiet
           haxelib run hmm reinstall --quiet
 
