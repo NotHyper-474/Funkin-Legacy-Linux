@@ -32,6 +32,7 @@ import openfl.media.Video;
 import openfl.net.NetStream;
 import funkin.api.newgrounds.NGio;
 import openfl.display.BlendMode;
+import funkin.save.Save;
 
 #if desktop
 #end
@@ -124,7 +125,7 @@ class TitleState extends MusicBeatState
 
     persistentUpdate = true;
 
-    var bg:FunkinSprite = new FunkinSprite().makeSolidColor(FlxG.width, FlxG.height, FlxColor.BLACK);
+    var bg:FunkinSprite = new FunkinSprite(-1).makeSolidColor(FlxG.width + 2, FlxG.height, FlxColor.BLACK);
     bg.screenCenter();
     add(bg);
 
@@ -265,6 +266,18 @@ class TitleState extends MusicBeatState
     if (FlxG.keys.pressed.DOWN) FlxG.sound.music.pitch -= 0.5 * elapsed;
     #end
 
+    #if desktop
+    if (FlxG.keys.justPressed.ESCAPE)
+    {
+      Sys.exit(0);
+    }
+    #end
+
+    if (Save.instance.charactersSeen.contains("pico"))
+    {
+      Save.instance.charactersSeen.remove("pico");
+      Save.instance.oldChar = false;
+    }
     Conductor.instance.update();
 
     /* if (FlxG.onMobile)
@@ -513,7 +526,8 @@ class TitleState extends MusicBeatState
       remove(ngSpr);
 
       FlxG.camera.flash(FlxColor.WHITE, initialized ? 1 : 4);
-      remove(credGroup);
+
+      if (credGroup != null) remove(credGroup);
       skippedIntro = true;
     }
   }
