@@ -487,6 +487,12 @@ class Project extends HXProject {
 		// Enable OpenFL's error handler. Required for the crash logger.
     setHaxedef("openfl-enable-handle-error");
 
+		// Fixes crash on Linux HashLink (https://github.com/HaxeFoundation/hashlink/issues/590#issuecomment-1466729913)
+		// This breaks HTTPS requests
+		if (isHashLink() && isLinux()) {
+			setHaxedef("no_ssl");
+		}
+
 		// Enable stack trace tracking. Good for debugging but has a (minor) performance impact.
 		setHaxedef("HXCPP_CHECK_POINTER");
 		setHaxedef("HXCPP_STACK_LINE");
