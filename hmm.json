@@ -145,8 +145,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "fe3368f611a84a19afc03011353945ae4da8fffd",
-      "url": "https://github.com/FunkinCrew/lime"
+      "ref": "dev-funkin",
+      "url": "https://github.com/NotHyper-474/lime"
     },
     {
       "name": "mconsole",
