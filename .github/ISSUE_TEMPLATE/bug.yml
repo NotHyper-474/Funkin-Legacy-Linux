@@ -12,56 +12,40 @@ body:
         - label: I have checked the Issues/Discussions pages to see if my issue has already been reported
         - label: I have properly named my issue
 
-  - type: dropdown
+  - type: input
     attributes:
-      label: Platform
-      description: Which platform are you playing on?
-      options:
-        - Newgrounds (Web/HTML5)
-        - Itch.io (Web/HTML5)
-        - Itch.io (Downloadable Build) - Windows
-        - Itch.io (Downloadable Build) - MacOS
-        - Itch.io (Downloadable Build) - Linux
-        - Compiled from GitHub Source Code
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
-  - type: dropdown
-    attributes:
-      label: Browser
-      description: (Web/HTML5 users only) Which browser are you playing on?
-      options:
-        - Google Chrome
-        - Microsoft Edge
-        - Firefox
-        - Opera
-        - Safari
-        - Other (Specify in Description field)
 
   - type: input
     attributes:
       label: Version
-      description: Which version are you playing on? The game version is in the bottom left corner of the main menu. 
+      description: Which version are you playing on? The game version is in the bottom left corner of the main menu.
       placeholder: ex. 0.5.3
     validations:
       required: true
-  
+
   - type: markdown
     attributes:
       value: "## Describe your bug."
 
   - type: markdown
     attributes:
-      value: "### Please do not report issues from other engines. These must be reported in their respective repositories."
+      value: |
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        ### Also do notice that issues that are in the base game are likely to not be fixed! Only report issues specific to these builds
 
   - type: textarea
     attributes:
       label: Description (include any images, videos, errors, or crash logs)
-      description: Provide as much detail as you can. The better others understand your issue, the more they can help you!  
+      description: Provide as much detail as you can. The better others understand your issue, the more they can help you!
       placeholder: Describe your issue here...
     validations:
       required: true
-      
+
   - type: textarea
     attributes:
       label: Steps to Reproduce
