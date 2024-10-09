@@ -14,15 +14,15 @@ body:
 
   - type: input
     attributes:
-      label: Linux Distribution
-      description: Which Linux distribution are you using?
+      label: Linux Distribution & Version
+      description: Which Linux distribution and version of it are you using?
       placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
 
   - type: input
     attributes:
-      label: Version
+      label: Game Version
       description: Which version are you playing on? The game version is in the bottom left corner of the main menu.
       placeholder: ex. 0.5.3
     validations:
