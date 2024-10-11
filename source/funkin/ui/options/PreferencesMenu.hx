@@ -81,6 +81,9 @@ class PreferencesMenu extends Page
     createPrefItemNumber('FPS', 'The maximum framerate that the game targets', function(value:Float) {
       Preferences.framerate = Std.int(value);
     }, null, Preferences.framerate, 30, 300, 5, 0);
+    createPrefItemCheckbox('V-Sync', 'Whenever Vertical-Sync is enabled or not', function(value:Bool):Void {
+      Preferences.vsync = value;
+    }, Preferences.vsync);
     #end
   }
 

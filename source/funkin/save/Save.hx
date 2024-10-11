@@ -93,6 +93,7 @@ class Save
         {
           // Reasonable defaults.
           framerate: 60,
+          vsync: false,
           naughtyness: true,
           downscroll: false,
           flashingLights: true,
@@ -1274,6 +1275,12 @@ typedef SaveDataOptions =
    * @default `60`
    */
   var framerate:Int;
+
+  /**
+   * V-Sync
+   * @default `false`
+   */
+  var vsync:Bool;
 
   /**
    * Whether some particularly foul language is displayed.
