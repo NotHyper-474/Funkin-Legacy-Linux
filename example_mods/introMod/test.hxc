@@ -1,0 +1,25 @@
+import funkin.modding.module.Module;
+import funkin.audio.FunkinSound;
+
+class Test extends Module {
+    public function new(id:String) {
+      super("Test");
+    }
+
+    public override function onFocusGained(e:ScriptEvent) {
+      super.onFocusGained(e);
+
+      var a:String = null;
+      try {
+        //trace(a.length);
+        /*var funker:String = "bf";
+        var data = Json.parse(Assets.getText(Paths.json('funkerSelector/' + funker)));
+        trace(data);*/
+      }
+      catch (err:Dynamic) {
+        trace("Catched error: " + err);
+      }
+
+      trace("Doing something else...");
+    }
+}
