@@ -91,16 +91,8 @@ class ChartEditorWelcomeDialog extends ChartEditorBaseDialog
     linkRecentChart.tooltip = chartPath;
 
     #if sys
-    if (!FileUtil.doesFileExist(chartPath))
-    {
-      trace('Previously loaded chart file (${chartPath}) does not exist, disabling link...');
-      linkRecentChart.disabled = true;
-    }
-    else
-    {
-      var lastModified:String = "Last Modified: " + sys.FileSystem.stat(chartPath).mtime.toString();
-      linkRecentChart.tooltip += "\n" + lastModified;
-    }
+    var lastModified:String = "Last Modified: " + sys.FileSystem.stat(chartPath).mtime.toString();
+    linkRecentChart.tooltip += "\n" + lastModified;
     #end
 
     linkRecentChart.onClick = function(_event) {
@@ -117,6 +109,12 @@ class ChartEditorWelcomeDialog extends ChartEditorBaseDialog
       {
         chartEditorState.error('Failed to Load Chart', 'Failed to load chart (${chartPath.toString()})');
       }
+    }
+
+    if (!FileUtil.doesFileExist(chartPath))
+    {
+      trace('Previously loaded chart file (${chartPath}) does not exist, disabling link...');
+      linkRecentChart.disabled = true;
     }
 
     splashRecentContainer.addComponent(linkRecentChart);
