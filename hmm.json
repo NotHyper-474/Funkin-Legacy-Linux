@@ -4,8 +4,8 @@
       "name": "FlxPartialSound",
       "type": "git",
       "dir": null,
-      "ref": "41f35ddb1eb9d10bc742e6f8b5bcc62f9ef8ad84",
-      "url": "https://github.com/FunkinCrew/FlxPartialSound.git"
+      "ref": "9f7d2d578f37bfffc553c831d94f37c4b99082b7",
+      "url": "https://github.com/NotHyper-474/FlxPartialSound-PR.git"
     },
     {
       "name": "flixel",
@@ -143,8 +143,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "be81ad7e4e1a92c3482bcc009648a4ac892cfa35",
-      "url": "https://github.com/FunkinCrew/lime"
+      "ref": "hashlink-patches",
+      "url": "https://github.com/NotHyper-474/lime.git"
     },
     {
       "name": "mconsole",
@@ -192,8 +192,8 @@
       "name": "polymod",
       "type": "git",
       "dir": null,
-      "ref": "0fbdf27fe124549730accd540cec8a183f8652c0",
-      "url": "https://github.com/larsiusprime/polymod"
+      "ref": "d50d821411e49c9c073c35dc59682a331042480b",
+      "url": "https://github.com/NotHyper-474/polymod.git"
     },
     {
       "name": "thx.core",
