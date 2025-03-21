@@ -44,6 +44,8 @@ class IntroSubState extends MusicBeatSubState
     #if hxvlc
     trace('Playing native video ${LIGHTS_VIDEO_PATH}');
     playVideoNative(LIGHTS_VIDEO_PATH);
+    #else
+    onLightsEnd();
     #end
 
     // // Im TOO lazy to even care, so uh, yep
@@ -121,6 +123,7 @@ class IntroSubState extends MusicBeatSubState
    */
   function onLightsEnd():Void
   {
+    #if (html5 || hxvlc)
     if (vid != null)
     {
       #if hxvlc
@@ -130,6 +133,7 @@ class IntroSubState extends MusicBeatSubState
       vid.destroy();
       vid = null;
     }
+    #end
 
     FlxG.camera.zoom = 1;
 
