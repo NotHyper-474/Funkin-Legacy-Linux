@@ -3,7 +3,7 @@ name: Crash Report
 description: Report a crash that occurred while playing the game.
 labels: ["type: major bug", "status: pending triage"]
 title: "Crash Report: "
-body:      
+body:
   - type: checkboxes
     attributes:
       label: Issue Checklist
@@ -24,7 +24,7 @@ body:
     attributes:
       label: Version
       description: Which version are you playing on? The game version is in the bottom left corner of the main menu.
-      placeholder: ex. 0.5.3
+      placeholder: ex. 0.6.2
     validations:
       required: true
 
