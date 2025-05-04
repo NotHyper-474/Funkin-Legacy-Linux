@@ -1,5 +1,9 @@
 name: x64 Linux Build
-on: workflow_dispatch
+on: 
+  workflow_dispatch:
+  push:
+    tags: 
+      - 'v*'
 jobs:
   build:
     name: Linux Build
@@ -40,13 +44,13 @@ jobs:
           haxelib git hmm https://github.com/NotHyper-474/hmm.git b742bb114aa84d1b277a318ffd30e93833986bfb --quiet
           haxelib run hmm setup --quiet
           haxelib run hmm reinstall --quiet
-          cd $(haxelib libpath hxcpp)/tools/hxcpp
-          haxe compile.hxml
-          cd ../../../..
           
 
       - name: Build Game
-        run: haxelib run lime build linux
+        env: 
+          NG_APP_ID: ${{ secrets.NG_APP_ID }}
+          NG_ENC_KEY: ${{ secrets.NG_ENC_KEY }}
+        run: echo 'y' | haxelib run lime build linux -DAPI_NG_APP_ID=$NG_APP_ID -DAPI_NG_ENC_KEY=$NG_ENC_KEY
 
       - name: Pack to Tar
         run: tar -czvf funkin-linux-64bit-unofficial.tar.gz -C export/release/linux/bin .
@@ -58,7 +62,15 @@ jobs:
           path: funkin-linux-64bit-unofficial.tar.gz
           if-no-files-found: error
 
-      # Thanks to https://stackoverflow.com/a/73556714 for the code!
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          name: ${{ github.ref }} x64 Linux Build
+          body: Uhhhhh use a file for this
+          files: funkin-linux-64bit-unofficial.tar.gz
+
+      # Thanks to https://stackoverflow.com/a/73556714 for the script!
       - name: Clear cache
         uses: actions/github-script@v6
         with:
