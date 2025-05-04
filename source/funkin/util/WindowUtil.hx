@@ -18,22 +18,62 @@ using StringTools;
 class WindowUtil
 {
   /**
+   * A regex to match valid URLs.
+   */
+  public static final URL_REGEX:EReg = ~/^https?:\/?\/?(?:www\.)?[-a-zA-Z0-9@:%_\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
+
+  /**
+   * Sanitizes a URL via a regex.
+   *
+   * @param targetUrl The URL to sanitize.
+   * @return The sanitized URL, or an empty string if the URL is invalid.
+   */
+  public static function sanitizeURL(targetUrl:String):String
+  {
+    targetUrl = (targetUrl ?? '').trim();
+    if (targetUrl == '')
+    {
+      return '';
+    }
+
+    final lowerUrl:String = targetUrl.toLowerCase();
+    if (!lowerUrl.startsWith('http:') && !lowerUrl.startsWith('https:'))
+    {
+      targetUrl = 'http://' + targetUrl;
+    }
+
+    if (URL_REGEX.match(targetUrl))
+    {
+      return URL_REGEX.matched(0);
+    }
+
+    return '';
+  }
+
+  /**
    * Runs platform-specific code to open a URL in a web browser.
    * @param targetUrl The URL to open.
    */
   public static function openURL(targetUrl:String):Void
   {
-    #if CAN_OPEN_LINKS
-    #if (target.threaded)
-    sys.thread.Thread.create(() -> {
-    #end
-      FlxG.openURL(targetUrl);
-    #if (target.threaded)
-    });
-    #end
-    /*#else // Should work for HTML5
+    // Ensure you can't open protocols such as steam://, file://, etc
+    var protocol:Array<String> = targetUrl.split("://");
+    if (protocol.length == 1) targetUrl = 'https://${targetUrl}';
+    else if (protocol[0] != 'http' && protocol[0] != 'https') throw "openURL can only open http and https links.";
+
+    #if FEATURE_OPEN_URL
+    targetUrl = sanitizeURL(targetUrl);
+    if (targetUrl == '')
+    {
+      throw 'Invalid URL: "$targetUrl"';
+    }
+
+    #if linux
+    Sys.command('/usr/bin/xdg-open $targetUrl &');
+    #else
+    // This should work on Windows and HTML5.
     FlxG.openURL(targetUrl);
-    #end*/
+    #end
     #else
     throw 'Cannot open URLs on this platform.';
     #end
@@ -62,53 +102,6 @@ class WindowUtil
     cpp.vm.tracy.TracyProfiler.setThreadName("main");
   }
   #end
-
-  /**
-   * Runs platform-specific code to open a path in the file explorer.
-   * @param targetPath The path to open.
-   */
-  public static function openFolder(targetPath:String):Void
-  {
-    #if FEATURE_OPEN_URL
-    #if windows
-    Sys.command('explorer', [targetPath.replace('/', '\\')]);
-    #elseif mac
-    Sys.command('open', [targetPath]);
-    #elseif linux
-    // For now just reuse FileUtil, why is there even two methods that do the same thing?
-    FileUtil.openFolder(targetPath);
-    #end
-    #else
-    throw 'Cannot open URLs on this platform.';
-    #end
-  }
-
-  /**
-   * Runs platform-specific code to open a file explorer and select a specific file.
-   * @param targetPath The path of the file to select.
-   */
-  public static function openSelectFile(targetPath:String):Void
-  {
-    #if FEATURE_OPEN_URL
-    #if windows
-    Sys.command('explorer', ['/select,' + targetPath.replace('/', '\\')]);
-    #elseif mac
-    Sys.command('open', ['-R', targetPath]);
-    #elseif linux
-    // TODO: Is this consistent across distros?
-    Sys.command('dbus-send', [
-      '--session',
-      '--print-reply',
-      '--dest=org.freedesktop.FileManager1',
-      '--type=method_call /org/freedesktop/FileManager1',
-      'org.freedesktop.FileManager1.ShowItems array:string:"file://$targetPath"',
-      'string:""'
-    ]);
-    #end
-    #else
-    throw 'Cannot open URLs on this platform.';
-    #end
-  }
 
   /**
    * Dispatched when the game window is closed.
@@ -179,5 +172,21 @@ class WindowUtil
     trace('[$title] $message');
 
     lime.app.Application.current.window.alert(message, title);
+  }
+
+  public static function setVSyncMode(value:lime.ui.WindowVSyncMode):Void
+  {
+    // vsync crap dont worky on mac rn derp
+    #if !mac
+    var res:Bool = FlxG.stage.application.window.setVSyncMode(value);
+
+    // SDL_GL_SetSwapInterval returns the value we assigned on success, https://wiki.libsdl.org/SDL2/SDL_GL_GetSwapInterval#return-value.
+    // In lime, we can compare this to the original value to get a boolean.
+    if (!res)
+    {
+      trace('Failed to set VSync mode to ' + value);
+      FlxG.stage.application.window.setVSyncMode(lime.ui.WindowVSyncMode.OFF);
+    }
+    #end
   }
 }
