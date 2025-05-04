@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     name: Linux Build
-    runs-on: ubuntu-20.04 # Distro with at least an suitable GLibC version
+    runs-on: ubuntu-22.04 # Distro with at least an suitable GLibC version
     permissions: write-all
     strategy:
       fail-fast: false
