@@ -265,9 +265,9 @@ class PreferencesMenu extends Page<OptionsState.OptionsMenuPageName>
 
   /**
    * Creates a pref item that works with enums
-   * @param values Maps enum values to display strings _(ex: `NoteHitSoundType.PingPong => "Ping pong"`)_
+   * @param values Maps display strings to enum values _(ex: `"Ping pong" => NoteHitSoundType.PingPong`)_
    * @param onChange Gets called every time the player changes the value; use this to apply the value
-   * @param defaultValue The value that is loaded in when the pref item is created (usually your Preferences.settingVariable)
+   * @param defaultKey The key for the value that is loaded in when the pref item is created
    */
   function createPrefItemEnum<T>(prefName:String, prefDesc:String, values:Map<String, T>, onChange:String->T->Void, defaultKey:String):Void
   {
