@@ -45,6 +45,7 @@ import funkin.util.MathUtil;
 import funkin.util.SortUtil;
 import openfl.display.BlendMode;
 import funkin.data.freeplay.style.FreeplayStyleRegistry;
+import funkin.ui.debug.charting.ChartEditorState;
 #if FEATURE_DISCORD_RPC
 import funkin.api.discord.DiscordClient;
 #end
@@ -191,21 +192,26 @@ class FreeplayState extends MusicBeatSubState
 
   public function new(?params:FreeplayStateParams, ?stickers:StickerSubState)
   {
-    currentCharacterId = params?.character ?? rememberedCharacterId;
-    styleData = FreeplayStyleRegistry.instance.fetchEntry(currentCharacterId);
-
     var fetchPlayableCharacter = function():PlayableCharacter {
       var targetCharId = params?.character ?? rememberedCharacterId;
       var result = PlayerRegistry.instance.fetchEntry(targetCharId);
-      if (result == null) throw 'No valid playable character with id ${targetCharId}';
+      if (result == null)
+      {
+        trace('No valid playable character with id ${targetCharId}');
+        result = PlayerRegistry.instance.fetchEntry(Constants.DEFAULT_CHARACTER);
+        if (result == null) throw 'WTH your default character is null?????';
+      }
       return result;
     };
 
     currentCharacter = fetchPlayableCharacter();
+    currentCharacterId = currentCharacter.getFreeplayStyleID();
+
     currentVariation = rememberedVariation;
     currentDifficulty = rememberedDifficulty;
-    styleData = FreeplayStyleRegistry.instance.fetchEntry(currentCharacter.getFreeplayStyleID());
+    styleData = FreeplayStyleRegistry.instance.fetchEntry(currentCharacterId);
     rememberedCharacterId = currentCharacter?.id ?? Constants.DEFAULT_CHARACTER;
+
     fromCharSelect = params?.fromCharSelect ?? false;
     fromResultsParams = params?.fromResults;
     prepForNewRank = fromResultsParams?.playRankAnim ?? false;
@@ -497,6 +503,7 @@ class FreeplayState extends MusicBeatSubState
     // Reminder, this is a callback function being set, rather than these being called here in create()
     letterSort.changeSelectionCallback = (str) -> {
       var curSong:Null<FreeplaySongData> = grpCapsules.members[curSelected]?.freeplayData;
+      grpCapsules.members[curSelected].selected = false;
 
       switch (str)
       {
@@ -550,7 +557,7 @@ class FreeplayState extends MusicBeatSubState
     add(fnfFreeplay);
     add(ostName);
 
-    if (PlayerRegistry.instance.hasNewCharacter())
+    if (PlayerRegistry.instance.countUnlockedCharacters() > 1)
     {
       add(charSelectHint);
     }
@@ -726,10 +733,6 @@ class FreeplayState extends MusicBeatSubState
     currentFilteredSongs = tempSongs;
     curSelected = 0;
 
-    // If curSelected is 0, the result will be null and fall back to the rememberedSongId.
-    // We set this so if we change the filter, we'd remain on the same song if it's still in the list.
-    rememberedSongId = grpCapsules.members[curSelected]?.freeplayData?.data.id ?? rememberedSongId;
-
     grpCapsules.killMembers();
 
     // Initialize the random capsule, with empty/blank info (which we display once bf/pico does his hand)
@@ -829,12 +832,11 @@ class FreeplayState extends MusicBeatSubState
       case ALL:
         // no filter!
       case FAVORITE:
+        // sort favorites by week, not alphabetically
         songsToFilter = songsToFilter.filter(filteredSong -> {
           if (filteredSong == null) return true; // Random
           return filteredSong.isFav;
         });
-
-        songsToFilter.sort(filterAlphabetically);
 
       default:
         // return all on default
@@ -855,6 +857,9 @@ class FreeplayState extends MusicBeatSubState
 
     rememberedSongId = fromResults.songId;
     rememberedDifficulty = fromResults.difficultyId;
+    capsuleToRank.fakeRanking.visible = true;
+    capsuleToRank.fakeRanking.alpha = 0; // If this isn't done, you'd see a tiny E being replaced for the first rank
+
     changeSelection();
     changeDiff();
 
@@ -895,6 +900,7 @@ class FreeplayState extends MusicBeatSubState
       sparksADD.cameras = [rankCamera];
       sparksADD.color = fromResults.oldRank.getRankingFreeplayColor();
       // sparksADD.color = sparks.color;
+      capsuleToRank.fakeRanking.alpha = 1.0;
     }
 
     capsuleToRank.doLerp = false;
@@ -907,7 +913,6 @@ class FreeplayState extends MusicBeatSubState
     trace(originalPos);
 
     capsuleToRank.ranking.visible = false;
-    capsuleToRank.fakeRanking.visible = false;
 
     rankCamera.zoom = 1.85;
     FlxTween.tween(rankCamera, {"zoom": 1.8}, 0.6, {ease: FlxEase.sineIn});
@@ -1179,7 +1184,8 @@ class FreeplayState extends MusicBeatSubState
     fadeShader.fade(1.0, 0.0, 0.8, {ease: FlxEase.quadIn});
     FlxG.sound.music?.fadeOut(0.9, 0);
     new FlxTimer().start(0.9, _ -> {
-      FlxG.switchState(new funkin.ui.charSelect.CharSelectSubState());
+      FlxG.switchState(new funkin.ui.charSelect.CharSelectSubState({character: currentCharacterId} // Passing the currrent Freeplay character to the CharSelect so we can start it with that character selected
+      ));
     });
     for (grpSpr in exitMoversCharSel.keys())
     {
@@ -1343,7 +1349,7 @@ class FreeplayState extends MusicBeatSubState
           grpCapsules.members[realShit].favIconBlurred.animation.play('fav');
           FunkinSound.playOnce(Paths.sound('fav'), 1);
           grpCapsules.members[realShit].checkClip();
-          grpCapsules.members[realShit].selected = grpCapsules.members[realShit].selected; // set selected again, so it can run it's getter function to initialize movement
+          grpCapsules.members[realShit].selected = true; // set selected again, so it can run it's getter function to initialize movement
           busy = true;
 
           grpCapsules.members[realShit].doLerp = false;
@@ -1368,6 +1374,7 @@ class FreeplayState extends MusicBeatSubState
             grpCapsules.members[realShit].favIcon.visible = false;
             grpCapsules.members[realShit].favIconBlurred.visible = false;
             grpCapsules.members[realShit].checkClip();
+            grpCapsules.members[realShit].selected = true; // set selected again, so it can run it's getter function to initialize movement
           });
 
           busy = true;
@@ -1660,6 +1667,45 @@ class FreeplayState extends MusicBeatSubState
     {
       grpCapsules.members[curSelected].onConfirm();
     }
+    if (controls.DEBUG_CHART && !busy)
+    {
+      busy = true;
+      var targetSongID = grpCapsules.members[curSelected]?.freeplayData?.data.id ?? 'unknown';
+      if (targetSongID == 'unknown')
+      {
+        trace('CHART RANDOM SONG');
+        letterSort.inputEnabled = false;
+
+        var availableSongCapsules:Array<SongMenuItem> = grpCapsules.members.filter(function(cap:SongMenuItem) {
+          // Dead capsules are ones which were removed from the list when changing filters.
+          return cap.alive && cap.freeplayData != null;
+        });
+
+        trace('Available songs: ${availableSongCapsules.map(function(cap) {
+      return cap?.freeplayData?.data.songName;
+    })}');
+
+        if (availableSongCapsules.length == 0)
+        {
+          trace('No songs available!');
+          busy = false;
+          letterSort.inputEnabled = true;
+          FunkinSound.playOnce(Paths.sound('cancelMenu'));
+          return;
+        }
+
+        var targetSong:SongMenuItem = FlxG.random.getObject(availableSongCapsules);
+
+        // Seeing if I can do an animation...
+        curSelected = grpCapsules.members.indexOf(targetSong);
+        changeSelection(0);
+        targetSongID = grpCapsules.members[curSelected]?.freeplayData?.data.id ?? 'unknown';
+      }
+      FlxG.switchState(() -> new ChartEditorState(
+        {
+          targetSongId: targetSongID,
+        }));
+    }
   }
 
   override function beatHit():Bool
@@ -1718,6 +1764,7 @@ class FreeplayState extends MusicBeatSubState
     touchTimer = 0;
     var previousVariation:String = currentVariation;
     var daSong:Null<FreeplaySongData> = grpCapsules.members[curSelected].freeplayData;
+    grpCapsules.members[curSelected].selected = false;
 
     // Available variations for current character. We get this since bf is usually `default` variation, and `pico` is `pico`
     // but sometimes pico can be the default variation (weekend 1 songs), and bf can be `bf` variation (darnell)
@@ -1832,6 +1879,8 @@ class FreeplayState extends MusicBeatSubState
 
     // Set difficulty star count.
     albumRoll.setDifficultyStars(daSong?.data.getDifficulty(currentDifficulty, currentVariation)?.difficultyRating ?? 0);
+
+    grpCapsules.members[curSelected].selected = true; // set selected again, so it can run it's getter function to initialize movement
   }
 
   function capsuleOnConfirmRandom(randomCapsule:SongMenuItem):Void
@@ -2098,7 +2147,7 @@ class FreeplayState extends MusicBeatSubState
       if (index < curSelected) capsule.targetPos.y -= 100; // another 100 for good measure
     }
 
-    if (grpCapsules.countLiving() > 0 && !prepForNewRank)
+    if (grpCapsules.countLiving() > 0 && !prepForNewRank && !busy)
     {
       playCurSongPreview(daSongCapsule);
       grpCapsules.members[curSelected].selected = true;

@@ -457,7 +457,7 @@ class Strumline extends FlxSpriteGroup
   public function calculateNoteYPos(strumTime:Float):Float
   {
     return
-      Constants.PIXELS_PER_MS * (conductorInUse.songPosition - strumTime - Conductor.instance.inputOffset) * scrollSpeed * (Preferences.downscroll ? 1 : -1);
+      Constants.PIXELS_PER_MS * (conductorInUse.getTimeWithDelta() - strumTime - Conductor.instance.inputOffset) * scrollSpeed * (Preferences.downscroll ? 1 : -1);
   }
 
   public function updateNotes():Void
