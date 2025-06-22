@@ -1,8 +1,13 @@
 package funkin.audio.waveform;
 
+import lime.utils.Float32Array;
 import funkin.util.TimerUtil;
 import haxe.ds.Vector;
 import haxe.io.Bytes;
+#if web
+import lime.utils.UInt8Array;
+import js.html.audio.AnalyserNode;
+#end
 
 @:nullSafety
 class WaveformDataParser
@@ -47,14 +52,27 @@ class WaveformDataParser
 
   public static function interpretAudioBuffer(soundBuffer:lime.media.AudioBuffer):Null<WaveformData>
   {
+    #if web
+    var sampleRate = soundBuffer.src._sounds[0]._node.context.sampleRate;
+    var channels = 2;
+    var bitsPerSample = 32;
+
+    var analyser:AnalyserNode = soundBuffer.src._sounds[0]._node.context.createAnalyser();
+    analyser.fftSize = 2048;
+
+    var data = new Float32Array(analyser.frequencyBinCount);
+    analyser.getFloatTimeDomainData(data);
+    var soundData = data.toBytes();
+    #else
     var sampleRate = soundBuffer.sampleRate;
     var channels = soundBuffer.channels;
     var bitsPerSample = soundBuffer.bitsPerSample;
+    var soundData:Bytes = soundBuffer.data.toBytes();
+    #end
+
     var samplesPerPoint:Int = 256; // I don't think we need to configure this.
     var pointsPerSecond:Float = sampleRate / samplesPerPoint; // 172 samples per second for most songs is plenty precise while still being performant..
 
-    // TODO: Make this work better on HTML5.
-    var soundData:Bytes = soundBuffer.data.toBytes();
     var fakeBitsPerSample:Int = bitsPerSample;
     var minSampleValue:Int;
     var maxSampleValue:Int;
