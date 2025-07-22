@@ -170,8 +170,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "c750ebf6b48c4bc018abe9855fbae5ffdbc4771a",
-      "url": "https://github.com/FunkinCrew/lime"
+      "ref": "funkin-linux",
+      "url": "https://github.com/NotHyper-474/lime"
     },
     {
       "name": "mconsole",
