@@ -1,8 +1,8 @@
 # Funkin-Legacy-Linux
-**This fork focuses on making builds for Linux that use an old version of GLibC (more specifically 2.29), I'll not try to fix issues in base game!**  
+**This fork focuses on making builds for Linux that use an old version of GLibC (more specifically 2.29), I'll not try to fix issues in base game!**
 You can download the builds through [Releases (recommended)](https://github.com/NotHyper-474/Funkin-Legacy-Linux/releases) or [Actions](https://github.com/NotHyper-474/Funkin-Legacy-Linux/actions/workflows/build-linux.yml)
 
-# Friday Night Funkin' 
+# Friday Night Funkin'
 
 Friday Night Funkin' is a rhythm game. Built using HaxeFlixel for Ludum Dare 47.
 
@@ -10,6 +10,8 @@ This game was made with love to Newgrounds and its community. Extra love to Tom 
 
 - [Playable web demo on Newgrounds!](https://www.newgrounds.com/portal/view/770371)
 - [Demo download builds for Windows, Mac, and Linux from Itch.io!](https://ninja-muffin24.itch.io/funkin)
+- [Download Android builds from Google Play!](https://play.google.com/store/apps/details?id=me.funkin.fnf)
+- [Download iOS builds from the App Store!](https://apps.apple.com/app/id6740428530)
 
 # Getting Started
 
@@ -34,6 +36,11 @@ Full credits can be found in-game, or in the `credits.json` file which is locate
 - [EliteMasterEric](https://twitter.com/EliteMasterEric) - Programmer
 - [MtH](https://twitter.com/emmnyaa) - Charting and Additional Programming
 - [GeoKureli](https://twitter.com/Geokureli/) - Additional Programming
+- [ZackDroid](https://x.com/ZackDroidCoder) - Lead Mobile Programmer
+- [MAJigsaw77](https://github.com/MAJigsaw77) - Mobile Programmer
+- [Karim-Akra](https://x.com/KarimAkra_0) - Mobile Programmer
+- [Sector_5](https://github.com/sector-a) - Mobile Programmer
+- [Luckydog7](https://github.com/luckydog7) - Mobile Programmer
 - Our contributors on GitHub
 
 ## Art / Animation / UI

@@ -15,6 +15,7 @@ using StringTools;
 #include <psapi.h>
 ')
 #end
+@:nullSafety
 class WindowUtil
 {
   /**
@@ -86,12 +87,6 @@ class WindowUtil
    */
   public static function initTracy():Void
   {
-    // Apply a marker to indicate frame end for the Tracy profiler.
-    // Do this only if Tracy is configured to prevent lag.
-    openfl.Lib.current.stage.addEventListener(openfl.events.Event.EXIT_FRAME, (e:openfl.events.Event) -> {
-      cpp.vm.tracy.TracyProfiler.frameMark();
-    });
-
     var appInfoMessage = funkin.util.logging.CrashHandler.buildSystemInfo();
 
     trace("Friday Night Funkin': Connection to Tracy profiler successful.");
@@ -121,6 +116,7 @@ class WindowUtil
       windowExit.dispatch(exitCode);
     });
 
+    #if desktop
     openfl.Lib.current.stage.addEventListener(openfl.events.KeyboardEvent.KEY_DOWN, (e:openfl.events.KeyboardEvent) -> {
       for (key in PlayerSettings.player1.controls.getKeysForAction(WINDOW_FULLSCREEN))
       {
@@ -141,6 +137,7 @@ class WindowUtil
         }
       }
     });
+    #end
   }
 
   /**
