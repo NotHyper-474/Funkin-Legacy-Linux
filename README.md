@@ -1,3 +1,7 @@
+# Funkin-Legacy-Linux
+**This fork focuses on making builds for Linux that use an old version of GLibC (more specifically 2.29), I'll not try to fix issues in base game!**
+You can download the builds through [Releases (recommended)](https://github.com/NotHyper-474/Funkin-Legacy-Linux/releases) or [Actions](https://github.com/NotHyper-474/Funkin-Legacy-Linux/actions/workflows/build-linux.yml)
+
 <div align='center'><img src="docs/readme_images/FNF_logo.png" width="800">
 
 <h2>Friday Night Funkin' is a rhythm game. Built using HaxeFlixel for <a href="https://ldjam.com/events/ludum-dare/47">Ludum Dare 47.</a></h2>

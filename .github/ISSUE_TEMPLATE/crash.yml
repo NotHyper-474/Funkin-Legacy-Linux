@@ -1,49 +1,25 @@
+# Credits to tposejank for the templates!
 name: Crash Report
 description: Report a crash that occurred while playing the game.
 labels: ["type: major bug", "status: pending triage"]
 title: "Crash Report: "
 body:
-  - type: markdown
-    attributes:
-      value: "# PLEASE READ THE [CONTRIBUTING GUIDE](https://github.com/FunkinCrew/Funkin/blob/main/docs/CONTRIBUTING.md) BEFORE OPENING ISSUES!"
-
   - type: checkboxes
     attributes:
       label: Issue Checklist
       description: Be sure to complete these steps to increase the chances of your issue being addressed!
       options:
-        - label: I have read the [Contributing Guide](https://github.com/FunkinCrew/Funkin/blob/main/docs/CONTRIBUTING.md)
         - label: I have checked the Issues/Discussions pages to see if my issue has already been reported
         - label: I have properly titled my issue
         - label: I did not have any mods installed when I encountered this issue
 
-  - type: dropdown
+  - type: input
     attributes:
-      label: Platform
-      description: Which platform are you playing on?
-      options:
-        - Android
-        - iOS/iPadOS
-        - Newgrounds (Web/HTML5)
-        - Itch.io (Web/HTML5)
-        - Windows (Downloadable Build)
-        - MacOS (Downloadable Build)
-        - Linux (Downloadable Build)
-        - Compiled from GitHub Source Code
+      label: Linux Distribution
+      description: Which Linux distribution are you using?
+      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
     validations:
       required: true
-
-  - type: dropdown
-    attributes:
-      label: Browser
-      description: (Web/HTML5 users only) Which browser are you playing on?
-      options:
-        - Google Chrome
-        - Microsoft Edge
-        - Firefox
-        - Opera
-        - Safari
-        - Other (Specify in Description field)
 
   - type: input
     attributes:
@@ -71,7 +47,9 @@ body:
 
   - type: markdown
     attributes:
-      value: "### Please do not report issues from other engines. These must be reported in their respective repositories."
+      value: |
+        ### Please do not report issues from other engines. These must be reported in their repositories.
+        Do also notice that issues also in the base game are likely to not be fixed in these builds!
 
   - type: textarea
     attributes:
@@ -92,7 +70,7 @@ body:
   - type: textarea
     attributes:
       label: Crash logs
-      description: These can be found in the logs folder where Funkin.exe is, or in your mobile device's file explorer.
+      description: These can be found in the `logs` folder where the Funkin executable is.
       placeholder: Upload your logs here...
     validations:
       required: true

@@ -170,8 +170,8 @@
       "name": "lime",
       "type": "git",
       "dir": null,
-      "ref": "f109a083023a9e5622342257993fc745d9bbb959",
-      "url": "https://github.com/FunkinCrew/lime"
+      "ref": "funkin-linux",
+      "url": "https://github.com/NotHyper-474/lime"
     },
     {
       "name": "newgrounds",

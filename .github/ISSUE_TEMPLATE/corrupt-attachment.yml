@@ -1,9 +1,12 @@
-name: Bug Report
-description: Report a bug or an issue in the game.
-labels: ["type: minor bug", "status: pending triage"]
-assignees: "NotHyper-474"
-title: "Bug Report: "
+name: Corrupt Attachment Report
+description: Report an issue with the release attachments.
+labels: ["type: repository", "status: pending triage"]
+title: "Corrupt Attachment Report: "
 body:
+  - type: markdown
+    attributes:
+      value: "#### Please check for duplicates before opening an issue."
+      
   - type: checkboxes
     attributes:
       label: Issue Checklist
@@ -11,27 +14,18 @@ body:
       options:
         - label: I have checked the Issues/Discussions pages to see if my issue has already been reported
         - label: I have properly titled my issue
-        - label: I did not have any mods installed when I encountered this issue
 
   - type: input
     attributes:
-      label: Linux Distribution & Version
-      description: Which Linux distribution and version of it are you using?
-      placeholder: ex. Pop!_OS, Ubuntu/Debian, Arch (btw)...
-    validations:
-      required: true
-
-  - type: input
-    attributes:
-      label: Game Version
-      description: Which version are you playing on? The game version is in the bottom left corner of the main menu.
-      placeholder: ex. 0.7.5
+      label: Release Version
+      description: Which version were you trying to download?
+      placeholder: ex. 0.5.3
     validations:
       required: true
 
   - type: markdown
     attributes:
-      value: "## Describe your bug."
+      value: "## Describe the problem."
 
   - type: markdown
     attributes:
@@ -41,14 +35,8 @@ body:
 
   - type: textarea
     attributes:
-      label: Description (include any images, videos, errors, or crash logs)
+      label: Description
       description: Provide as much detail as you can. The better others understand your issue, the more they can help you!
       placeholder: Describe your issue here...
     validations:
       required: true
-
-  - type: textarea
-    attributes:
-      label: Steps to Reproduce
-      description: What steps can other people take to reliably encounter this issue?
-      placeholder: 1. Open the game...
