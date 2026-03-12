@@ -32,6 +32,10 @@ class SaveDataMigrator
         var save:Save = new Save(saveDataWithDefaults);
         return save;
       }
+      else if (VersionUtil.validateVersion(version, "2.1.x"))
+      {
+        return migrate_v2_1_0(inputData);
+      }
       else if (VersionUtil.validateVersion(version, "2.0.x"))
       {
         return migrate_v2_0_0(inputData);
@@ -47,6 +51,18 @@ class SaveDataMigrator
         return new Save(Save.getDefaultData());
       }
     }
+  }
+
+  static function migrate_v2_1_0(inputData:Dynamic):Save
+  {
+    // Import the structured data.
+    var saveDataWithDefaults:RawSaveData = cast thx.Objects.deepCombine(Save.getDefaultData(), inputData);
+
+    // Migrate from Debug Display boolean to String enum abstract
+    saveDataWithDefaults.options.debugDisplay = funkin.ui.debug.FunkinDebugDisplay.DebugDisplayMode.Off;
+
+    var save:Save = new Save(saveDataWithDefaults);
+    return save;
   }
 
   static function migrate_v2_0_0(inputData:Dynamic):Save
